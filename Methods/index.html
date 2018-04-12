@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.3/css/bulma.css">
+      <script src="https://unpkg.com/jquery"></script>
+      <script src="https://unpkg.com/vue"></script>
+    </head>
+    <body>
+
+      <!-- Vue Content -->
+      <section id="app" class="section container">
+        <p>
+          Name: {{ name }}</br>
+          Username: {{ username }} </br>
+          Email: {{ email }}
+        </p>
+
+        <a class="button is-primary" v-on:click="doWork"> Submit </a>
+      </section>
+      <script>
+
+          // Retrieve vue
+          const app = new Vue({
+              el : '#app',
+
+              data: {
+                  name : "Hammy",
+                  username : "asad_hammad",
+                  email : "hammad@hammy.com"
+              },
+
+              methods : {
+                doWork : function() {
+                    // String interpolation - Gotta use back ticks for string
+                    alert(`Button did work. Thanks ${this.name}!`);
+                }
+              }
+
+          });
+
+      </script>
+    </body>
+</html>
