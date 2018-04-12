@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.3/css/bulma.css">
+      <script src="https://unpkg.com/jquery"></script>
+      <script src="https://unpkg.com/vue"></script>
+    </head>
+    <body>
+
+      <!-- Vanilla JS -->
+      <!-- <section class="section container">
+        <h1 class="title">Hello</h1>
+        <input class="input" type="text"/>
+      </section> -->
+
+      <!-- Vue Content -->
+      <section id="app" class="section container">
+          <h1 class="title">{{ text }} and {{ text2 }}</h1>
+          <!-- Data binding here , notice the v-model -->
+          <input class="input" type="text" v-model="text"/>
+          <input class="input" type="text" v-model="text2"/>
+      </section>
+
+      <script>
+          // Vanilla JS method
+
+          // Grab DOM elements
+          // const title = document.querySelector('h1')
+          // const input = document.querySelector('input');
+
+          // As we type in the form, we'll change what the title says
+          // input.addEventListener('keyup', (event) => {
+          //     const text = event.target.value;
+          //     title.innerText = text;
+          // });
+
+          // JQuery method
+          // $('input').on('keyup', (event) => {
+          //     $('h1').text(event.target.value);
+          // });
+
+          // Retrieve vue
+          const app = new Vue({
+              el: '#app',
+              data: {
+                  text : "Hello Vue",
+                  text2 : "Hammad"
+              }
+          });
+
+      </script>
+    </body>
+</html>
