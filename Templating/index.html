@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.3/css/bulma.css">
+      <script src="https://unpkg.com/jquery"></script>
+      <script src="https://unpkg.com/vue"></script>
+    </head>
+    <body>
+
+      <!-- Vue Content -->
+      <section id="app" class="section container">
+        <!-- Directives work here, Vue parses template, scans tags to see if there's a binding and interpolates -->
+        <!-- Less JS work for us -->
+
+        <div v-if="isSuccessful">
+          <img v-bind:src="pic" class="picture "/>
+          <a class="button is-primary" v-on:click="doWork"> Submit </a>
+        </div>
+
+      </section>
+      <script>
+
+          // Retrieve vue
+          const app = new Vue({
+              el : '#app',
+
+              data : {
+                  pic : 'https://avatars2.githubusercontent.com/u/6133336?s=460&v=4',
+                  isSuccessful : true
+              },
+
+              methods : {
+                doWork : function() {
+                    // String interpolation - Gotta use back ticks for string
+                    alert(`Button did work. Thanks ${this.name}!`);
+                }
+              }
+
+          });
+
+      </script>
+
+      <style>
+          .picture {
+            height: 400px;
+            width: 400px;
+          }
+      </style>
+    </body>
+</html>
