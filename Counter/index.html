@@ -5,66 +5,28 @@
       <script src="https://unpkg.com/vue"></script>
     </head>
     <body>
-      <!-- Page Content -->
-      <div class="hero is-fullheight is-danger is-bold">
-          <div class="hero-body">
-              <div class="container">
-                  <h1 class="title has-text-centered"> Form </h1>
-                  <div class="box">
-                      <!-- Vue Element -->
-                      <form id="signup" v-on:submit.prevent="submitForm">
-                          <div class="field">
-                            <label class="label"> Name </label>
-                            <input
-                              type="text"
-                              name="name"
-                              class="input"
-                              v-model="username"
-                            />
-                          </div>
-                          <div class="field">
-                            <label class="label"> Email Address </label>
-                            <input
-                              type="email"
-                              name="name"
-                              class="input"
-                              v-model="email"
-                            />
-                            <p class="help is-danger" v-if="errors.email">
-                                Incorrect Email Format
-                            </p>
-                          </div>
-                          <div class="field has-text-right">
-                              <button type="submit" class="button is-primary"> Submit </button>
-                          </div>
-                      </form>
-                  </div>
-              </div>
-          </div>
-      </div>
+
+      <!-- Vue Content -->
+      <section id="app" class="section container">
+        <h1 class="title"> Counter </h1>
+        <div class="box content has-text-centered">
+            <h3 class="title is-1"> {{ count }} </h3>
+            <button type="button" class="button is-danger" v-on:click="doCount"> Count </button>
+        </div>
+      </section>
       <script>
 
           // Retrieve vue
           const app = new Vue({
-              el : '#signup',
+              el : '#app',
 
               data : {
-                  username : '',
-                  email : '',
-                  // Modify for error handling
-                  errors : {
-                      name : false,
-                      email : false,
-                  }
+                  count: 0
               },
 
               methods : {
-                submitForm : function() {
-                    console.log({ name : this.username, email : this.email})
-                },
-                validateEmail: function(email) {
-                    // Do validation
-                    // Set errors object based on this
+                doCount : function() {
+                    this.count++;
                 }
               }
 
