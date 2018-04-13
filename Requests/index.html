@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.3/css/bulma.css">
+      <script src="https://unpkg.com/jquery"></script>
+      <script src="https://unpkg.com/vue"></script>
+    </head>
+    <body>
+
+      <!-- Vue Content -->
+      <section id="app" class="section container">
+        <!-- Let's loop over the retrieved list of GIFs -->
+        <div v-if="listGifs" v-for="aGif in listGifs">
+            <img v-bind:src="aGif.images.original.url"/>
+        </div>
+      </section>
+
+      <script>
+          // Retrieve vue
+          const app = new Vue({
+              el: '#app',
+              data: {
+                  requestUrl: 'http://api.giphy.com/v1/gifs/trending',
+                  apiKey: 'tx2DVz5Vd18GgvuQa3AAQxKLMXEluYhM',
+                  listGifs : null
+              },
+
+              methods : {
+                  getGifs : function() {
+                      const url = this.requestUrl + "?api_key=" + this.apiKey;
+                      // Use newer fetch JS method
+                      fetch(url)
+                        // ES6 Syntax
+                        .then(response => response.json())
+                        .then(data => {
+                            this.listGifs = data.data;
+                        });
+
+                  }
+              },
+              // Life Cycle Event
+              created : function() {
+                  this.getGifs();
+              }
+          });
+
+      </script>
+    </body>
+</html>
