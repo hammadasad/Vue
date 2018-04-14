@@ -14,20 +14,12 @@
                   <!-- Searched Results -->
                   <h1 class="title"> Search </h1>
                   <input type="text" class="input" name="searchQuery" v-model="searchQuery" v-on:keyup="doSearch">
-                  <div class="columns is-multiline" v-if="searchGifs">
-                      <div class="column is-one-quarter" v-for="aGif in searchGifs">
-                          <gif-container :gif="aGif"></gif-container>
-                      </div>
-                  </div>
 
+                  <grids-gif :list="searchGifs"></grids-gif>
                   <!-- Trending GIFs -->
                   <h1 class="title"> Trending </h1>
                   <!-- Let's loop over the retrieved list of GIFs -->
-                  <div class="columns is-multiline" v-if="listGifs">
-                      <div class="column is-one-quarter" v-for="aGif in listGifs">
-                          <gif-container :gif="aGif"></gif-container>
-                      </div>
-                  </div>
+                  <grids-gif :list="gifs"></grids-gif>
             </section>
           </div>
       </div>
@@ -49,13 +41,26 @@
               </div>
             `
           });
+
+          Vue.component('grids-gif', {
+            // Do not use camel case for props....
+            props: ['list'],
+            template:
+            `
+              <div class="columns is-multiline" v-if="list">
+                  <div class="column is-one-quarter" v-for="aGif in list">
+                      <gif-container :gif="aGif"></gif-container>
+                  </div>
+              </div>
+            `
+          });
           // Retrieve vue
           const app = new Vue({
               el: '#app',
               data: {
                   requestUrl: 'http://api.giphy.com/v1/gifs/',
                   apiKey: 'tx2DVz5Vd18GgvuQa3AAQxKLMXEluYhM',
-                  listGifs : null,
+                  gifs : null,
                   searchGifs : null,
                   searchQuery : ''
               },
@@ -68,7 +73,7 @@
                         // ES6 Syntax
                         .then(response => response.json())
                         .then(data => {
-                            this.listGifs = data.data;
+                            this.gifs = data.data;
                         });
                   },
                   doSearch : function() {
