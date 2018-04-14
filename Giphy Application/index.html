@@ -16,15 +16,7 @@
                   <input type="text" class="input" name="searchQuery" v-model="searchQuery" v-on:keyup="doSearch">
                   <div class="columns is-multiline" v-if="searchGifs">
                       <div class="column is-one-quarter" v-for="aGif in searchGifs">
-                          <div class="gif-box">
-                            <a v-bind:href="aGif.url">
-                                <img v-bind:src="aGif.images.original.url"/>
-                            </a>
-                            <a class="user" v-if="aGif.user" v-bind:href="aGif.user.profile_url">
-                                <img v-bind:src="aGif.user.avatar_url" style="height:50px;width:50px;"/>
-                                {{ aGif.user.display_name }}
-                            </a>
-                          </div>
+                          <gif-container :gif="aGif"></gif-container>
                       </div>
                   </div>
 
@@ -33,21 +25,30 @@
                   <!-- Let's loop over the retrieved list of GIFs -->
                   <div class="columns is-multiline" v-if="listGifs">
                       <div class="column is-one-quarter" v-for="aGif in listGifs">
-                          <div class="gif-box">
-                            <a v-bind:href="aGif.url">
-                                <img v-bind:src="aGif.images.original.url"/>
-                            </a>
-                            <a class="user" v-if="aGif.user" v-bind:href="aGif.user.profile_url">
-                                <img v-bind:src="aGif.user.avatar_url" style="height:50px;width:50px;"/>
-                                {{ aGif.user.display_name }}
-                            </a>
-                          </div>
+                          <gif-container :gif="aGif"></gif-container>
                       </div>
                   </div>
             </section>
           </div>
       </div>
       <script>
+          Vue.component('gif-container', {
+            // Make sure prop name is different than the variable you're binding to above
+            // else it wont' work...
+            props: ['gif'],
+            // Use back ticks, easier to copy raw HTML
+            template: `
+              <div class="gif-box">
+                <a v-bind:href="gif.url">
+                    <img v-bind:src="gif.images.original.url"/>
+                </a>
+                <a class="user" v-if="gif.user" v-bind:href="gif.user.profile_url">
+                    <img v-bind:src="gif.user.avatar_url" style="height:50px;width:50px;"/>
+                    {{ gif.user.display_name }}
+                </a>
+              </div>
+            `
+          });
           // Retrieve vue
           const app = new Vue({
               el: '#app',
