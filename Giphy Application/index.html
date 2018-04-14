@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.3/css/bulma.css">
+      <script src="https://unpkg.com/jquery"></script>
+      <script src="https://unpkg.com/vue"></script>
+    </head>
+    <body>
+
+      <div class="hero is-fullheight is-info is-bold">
+          <div class="hero-body">
+            <!-- Vue Content -->
+            <section id="app" class="section container">
+              <!-- Let's loop over the retrieved list of GIFs -->
+                  <div class="columns is-multiline" v-if="listGifs">
+                      <div class="column is-one-quarter" v-for="aGif in listGifs">
+                          <div class="gif-box">
+                            <a v-bind:href="aGif.url">
+                                <img v-bind:src="aGif.images.original.url"/>
+                            </a>
+                            <a class="user" v-if="aGif.user" v-bind:href="aGif.user.profile_url">
+                                <img v-bind:src="aGif.user.avatar_url" style="height:50px;width:50px;"/>
+                                {{ aGif.user.display_name }}
+                            </a>
+                          </div>
+
+                      </div>
+                  </div>
+            </section>
+          </div>
+      </div>
+      <script>
+          // Retrieve vue
+          const app = new Vue({
+              el: '#app',
+              data: {
+                  requestUrl: 'http://api.giphy.com/v1/gifs/trending',
+                  apiKey: 'tx2DVz5Vd18GgvuQa3AAQxKLMXEluYhM',
+                  listGifs : null
+              },
+
+              methods : {
+                  getGifs : function() {
+                      const url = this.requestUrl + "?api_key=" + this.apiKey;
+                      // Use newer fetch JS method
+                      fetch(url)
+                        // ES6 Syntax
+                        .then(response => response.json())
+                        .then(data => {
+                            this.listGifs = data.data;
+                            console.log(data.data[0])
+                            console.dir(data.data[0].user)
+                        });
+
+                  }
+              },
+              // Life Cycle Event
+              created : function() {
+                  this.getGifs();
+              }
+          });
+
+      </script>
+
+      <style>
+          .gif-box {
+            position : relative;
+          }
+          .user {
+            /*Flex box for vertical alignment*/
+            display : flex;
+            position : absolute;
+            align-items : center;
+            left : 15px;
+            bottom : 15px;
+          }
+
+          .user img {
+            margin-right: 7px;
+          }
+      </style>
+    </body>
+</html>
